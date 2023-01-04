@@ -47,7 +47,7 @@ extern crate log;
 
 extern crate mime;
 extern crate mime_guess;
-extern crate rand;
+// extern crate rand;
 extern crate tempfile;
 
 #[cfg(feature = "quick-error")]
@@ -72,7 +72,7 @@ extern crate env_logger;
 #[cfg(any(feature = "mock", test))]
 pub mod mock;
 
-use rand::Rng;
+// use rand::Rng;
 
 /// Chain a series of results together, with or without previous results.
 ///
@@ -117,12 +117,18 @@ pub mod server;
 #[cfg(all(test, feature = "client", feature = "server"))]
 mod local_test;
 
+// fn random_alphanumeric(len: usize) -> String {
+//     rand::thread_rng()
+//         .sample_iter(&rand::distributions::Alphanumeric)
+//         .take(len)
+//         .map(|c| c as char)
+//         .collect()
+// }
+
+use std::iter::repeat_with;
 fn random_alphanumeric(len: usize) -> String {
-    rand::thread_rng()
-        .sample_iter(&rand::distributions::Alphanumeric)
-        .take(len)
-        .map(|c| c as char)
-        .collect()
+    let s: String = repeat_with(fastrand::alphanumeric).take(len).collect();
+    s
 }
 
 #[cfg(test)]
